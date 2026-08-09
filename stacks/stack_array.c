@@ -88,7 +88,7 @@ int main(void)
         printf("Popped: %d\n", value);
 	}
 	
-	  push(&stack, 50);
+	push(&stack, 50);
 	
     printf("Size: %d\n", size(&stack));
 
