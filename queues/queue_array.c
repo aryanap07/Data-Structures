@@ -107,11 +107,11 @@ int main(void)
         printf("Dequeued: %d\n", value);
     }
   
-    enqueue(&queue, 50);
-  
     printf("Queue after dequeue: ");
     display(&queue);
 
+    enqueue(&queue, 50);
+    
     printf("Size: %d\n", size(&queue));
 
     return 0;
