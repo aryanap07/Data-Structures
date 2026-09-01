@@ -99,13 +99,11 @@ int main(void)
     printf("Queue: ");
     display(&queue);
 
-    if (peek(&queue, &value)) {
+    if (peek(&queue, &value))
         printf("Front: %d\n", value);
-    }
 
-    if (dequeue(&queue, &value)) {
+    if (dequeue(&queue, &value))
         printf("Dequeued: %d\n", value);
-    }
   
     printf("Queue after dequeue: ");
     display(&queue);
