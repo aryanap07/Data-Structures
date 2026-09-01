@@ -80,13 +80,11 @@ int main(void)
     printf("Stack:\n");
     display(&stack);
 
-    if (peek(&stack, &value)) {
+    if (peek(&stack, &value))
         printf("Top: %d\n", value);
-	}
 	
-    if (pop(&stack, &value)) {
+    if (pop(&stack, &value))
         printf("Popped: %d\n", value);
-	}
 	
 	push(&stack, 50);
 	
