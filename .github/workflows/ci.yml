@@ -1,0 +1,73 @@
+name: C CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+  pull_request:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    name: Compile with ${{ matrix.compiler }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler:
+          - gcc
+          - clang
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Compile C Programs
+        env:
+          CC: ${{ matrix.compiler }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          build_dir="$(mktemp -d)"
+          source_count=0
+
+          while IFS= read -r -d '' file; do
+            source_count=$((source_count + 1))
+
+            relative_path="${file#./}"
+            output_path="$build_dir/${relative_path%.c}"
+
+            mkdir -p "$(dirname "$output_path")"
+
+            echo "Compiling: $relative_path"
+
+            "$CC" \
+              -std=c17 \
+              -Wall \
+              -Wextra \
+              "$file" \
+              -o "$output_path"
+          done < <(
+            find . \
+              -type f \
+              -name "*.c" \
+              -not -path "./.git/*" \
+              -print0
+          )
+
+          if [ "$source_count" -eq 0 ]; then
+            echo "Error: No C source files found."
+            exit 1
+          fi
+
+          echo
+          echo "Successfully compiled $source_count C program(s)."
