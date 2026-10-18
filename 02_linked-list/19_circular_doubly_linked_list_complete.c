@@ -22,6 +22,30 @@ Node *create_node(int value)
     return node;
 }
 
+Node *insert_at_beginning(Node *head, int value)
+{
+    Node *node = create_node(value);
+
+    if (node == NULL)
+    {
+        return head;
+    }
+
+    if (head == NULL)
+    {
+        return node;
+    }
+
+    Node *last = head->prev;
+
+    node->prev = last;
+    node->next = head;
+    last->next = node;
+    head->prev = node;
+
+    return node;
+}
+
 Node *insert_at_end(Node *head, int value)
 {
     Node *node = create_node(value);
@@ -125,8 +149,8 @@ int main(void)
 {
     Node *head = NULL;
 
-    head = insert_at_end(head, 10);
     head = insert_at_end(head, 20);
+    head = insert_at_beginning(head, 10);
     head = insert_at_end(head, 30);
 
     print_list(head);
