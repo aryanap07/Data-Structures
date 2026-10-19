@@ -54,10 +54,13 @@ int search(Node *root, int key, int *comparisons)
             return 1;
         }
 
+        (*comparisons)++;
+
         if (key < root->data)
         {
             root = root->left;
         }
+            
         else
         {
             root = root->right;
